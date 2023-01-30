@@ -1,0 +1,19 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib "C:/Users/Admin/Dropbox/PC/Documents/FPGA_proj/Vivado/LFSR_2022_2/LFSR_2022_2.srcs/sources_1/imports/include/timescale.v" "C:/Users/Admin/Dropbox/PC/Documents/FPGA_proj/Vivado/LFSR_2022_2/LFSR_2022_2.srcs/sources_1/imports/include/defines.v" --include "../../../../LFSR_2022_2.gen/sources_1/ip/clk_wiz_0" --include "../../../../LFSR_2022_2.ip_user_files/ipstatic" --include "../../../../LFSR_2022_2.srcs/sources_1/imports/include" \
+"../../../../LFSR_2022_2.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v" \
+"../../../../LFSR_2022_2.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/imports/include/timescale.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/imports/include/defines.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/debounce.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/lfsr.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/reset_gen.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/div_by_N.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/Seven_Seg_Display_Control.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/top_lfsr.v" \
+"../../../../LFSR_2022_2.srcs/sources_1/new/TB_top_lfsr.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
