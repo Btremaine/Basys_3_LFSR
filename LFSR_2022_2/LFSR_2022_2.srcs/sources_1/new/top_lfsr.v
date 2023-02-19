@@ -50,13 +50,13 @@ module top_lfsr (
   
   // instantiate modules
   div_by_N #(.N(32967), .Nb(16)) div_by_N_1 (
-    .reset       (btnU),
+    .reset       (btnU_3),
     .clk_in      (clock_5Mhz),
     //  
     .Q_out       (clock_120hz) );  
     
   div_by_N  #(.N(5000000), .Nb(23)) div_by_N_2 (
-    .reset       (btnU),
+    .reset       (btnU_3),
     .clk_in      (clock_5Mhz),
     //  
     .Q_out       (update_1Hz));  
@@ -65,8 +65,9 @@ module top_lfsr (
   // reset
   reset_gen reset_gen_1 (
    .clk       (sys_clk),
-   .inp       (pulse),     // btnU 
+   .inp       (pulse), 
    .rst_n     (rst_n) );    // active low reset
+   
   // debounce button logic
   debounce debounce_1 (
    .clk         (clock_5Mhz),    // 5Mhz
@@ -75,11 +76,11 @@ module top_lfsr (
    .outp        (pulse) );       // debounced output
    
   // linear feedback shift register (pseudorandom generator)
-  lfsr lfsr_1 (
+  lfsr #(.NUM_BITS(16)) lfsr_1 (
     .rst_n  (rst_n),
     .clk    (clock_5Mhz),
-    .pulse  (update_1Hz),                     // (update_1Hz),        // update every 1 sec   // debug !!!!
-    //
+    .pulse  (update_1Hz), // debug with refresh_rate, final update_1Hz
+    
     .word   (register) );
   
   // 7-segment display 

@@ -9,20 +9,22 @@
 //     None
 //-----------------------------------------------------------------------------
 //`include "timescale.v"
-module lfsr
-    (input clk,                // system clock
+module lfsr #(parameter NUM_BITS= 16)
+(
+     input clk,                    // system clock
      input rst_n,
-     input pulse,              // input to advance lfsr
+     input pulse,                   // input to advance lfsr
      //
-     output [15:0] word );     // output of lfsr register
+     output [NUM_BITS-1:0] word );  // output of lfsr register
      
      // registers used
-     reg [15:0] poly;
+     reg [NUM_BITS-1:0] poly;
      reg Q1;
      reg Q2;
+     reg r_XNOR;
      
      //parameters
-     parameter SEED = 16'h5EED;  // can't be 0 !!
+     localparam SEED = 16'h5EED;  // can't be 0 !!
      
      always @(posedge clk or negedge rst_n) begin
         if( !rst_n ) begin
@@ -39,26 +41,14 @@ module lfsr
          if( !rst_n )
             poly <= SEED;
          else if (Q1 && !Q2) begin
-            poly[0]  <= poly[15] ^ poly[14] ^ poly[12] ^ poly[3];
-            poly[1]  <= poly[0];
-            poly[2]  <= poly[1];
-            poly[3]  <= poly[2];
-            poly[4]  <= poly[3];
-            poly[5]  <= poly[4];
-            poly[6]  <= poly[5];
-            poly[7]  <= poly[6];
-            poly[8]  <= poly[7];
-            poly[9]  <= poly[8];
-            poly[10] <= poly[9];
-            poly[11] <= poly[10];
-            poly[12] <= poly[11];   
-            poly[13] <= poly[12];
-            poly[14] <= poly[13];  
-            poly[15] <= poly[14];   
-         end // if
-       
+            poly[NUM_BITS-1:0] <= {poly[NUM_BITS-2:0], r_XNOR};
+         end // if   
      end // always
      
-     assign word = poly[15:0];
+     always@ (*) begin
+         r_XNOR <= poly[15] ^ poly[14] ^ poly[12] ^ poly[3];   
+     end //always
+     
+     assign word = poly[NUM_BITS-1:0];
      
 endmodule
